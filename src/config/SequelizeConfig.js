@@ -5,17 +5,17 @@ const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_HOST = process.env.DB_HOST;
 
-const sequelize = new Sequelize('database', 'username', 'password', {
-    host: 'localhost',
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+    host: DB_HOST,
     dialect: 'mysql', 
 });
 
 const database = async () => {
 try {
-    await sequelize.aunthenticate();
+    await sequelize.sync();
+
     console.log('Conexion establecida con exito');
 
-    return sequelize;
 } catch (error) {
     console.error('Error:', error);
 
@@ -23,4 +23,4 @@ try {
 }
 }
 
-module.exports = database;
+module.exports = {database, sequelize}
